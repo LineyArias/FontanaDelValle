@@ -9,6 +9,7 @@ import Modelo.Producto;
 import Modelo.ProductoDAO;
 import Modelo.dbConexion;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,5 +37,27 @@ public class CtrProductos {
             Logger.getLogger(CtrProductos.class.getName()).log(Level.SEVERE, null, exc);
             return exc.getMessage();
         }        
+    }
+    
+    public ArrayList<Producto> getRecords(){
+        try {
+             conexion = new dbConexion();
+            ProductoDAO pDao= new ProductoDAO(conexion);
+            return pDao.getRecords();
+        } catch (SQLException | ClassNotFoundException exc) {
+            Logger.getLogger(CtrProductos.class.getName()).log(Level.SEVERE, null, exc);            
+        }   
+        return null;
     } 
+    
+     public Producto getPk(int id){
+        try {
+            conexion = new dbConexion();
+            ProductoDAO cDao= new ProductoDAO(conexion);
+            return cDao.getProductoPorId(id);
+          } catch (SQLException | ClassNotFoundException exc) {
+            Logger.getLogger(CtrProductos.class.getName()).log(Level.SEVERE, null, exc);            
+        }  
+        return null;
+  }    
 }
