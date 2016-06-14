@@ -78,4 +78,22 @@ public class ProductoDAO {
         pr.setPrEstado(rs.getString("prEstado"));        
         return pr;
     } 
+    
+    
+     public void update(String pk,Producto c) throws SQLException {
+        // actualizar objeto de la lista
+        boolean result = false;
+        String sql = "update producto  set  prCantidad=?,prPrecio=?, prEstado=? where prCodigo=?";
+	java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
+        pst.setInt(3, c.getPrCantidad());
+        pst.setFloat(4, c.getPrPrecio());
+        pst.setString(5, c.getPrEstado());
+        pst.setString(6, pk);
+        this.lError = true;
+	if (conexion.Update(pst) > 0) {
+            conexion.Commit();
+            this.lError = false;
+	}
+    }
+    
 }

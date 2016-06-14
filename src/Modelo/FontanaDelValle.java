@@ -22,7 +22,7 @@ public class FontanaDelValle {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
        
        Connection conexion = null;
-        conexion = getConnection("jdbc:mysql://localhost/fontana","root","root");
+        conexion = getConnection("jdbc:mysql://localhost/fontanaNuevo","root","root");
         String sql = "select * from categorias where PadreId=? ";
 			java.sql.PreparedStatement pst = conexion.prepareStatement(sql);
                         String val="1"; 

@@ -1,5 +1,6 @@
 package Utiles;
 
+import java.awt.event.ActionEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +21,7 @@ public class Validacion {
         if((c<'a' || c>'z') && (c<'A' || c>'Z')) evt.consume();
     }
     
+    /**
     public boolean esApellidoValido(String apellido){
         return apellido.trim().length() >0;
     }
@@ -56,4 +58,6 @@ public class Validacion {
     public boolean esHabitacionValida(String apellido){
         return apellido.trim().length() >2;
     }   
+
+   **/ 
 }

@@ -5,26 +5,40 @@
  */
 package Vista;
 import Control.CtrolRegistroCliente;
+import Control.CtrlRegistroMun;
 import Modelo.Cliente;
+import Modelo.Municipio;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import Utiles.Validacion;
 /**
  *
  * @author Leam
  */
 public class FrmCliente extends javax.swing.JFrame {
 CtrolRegistroCliente crC= new CtrolRegistroCliente ();
+ String tipoh;
+ Validacion v = new Validacion();
+    
+
     /**
      * Creates new form prueba
      */
     public FrmCliente() {
        
         initComponents();
-        mostrar();
+    try {
+        this.cargarCombobox();
+        //mostrar();
+        //this.CargarComboCiudad();
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(FrmCliente.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        
     }
 
     /**
@@ -40,7 +54,6 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
         btnInicio = new javax.swing.JButton();
         btnVentas = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
-        btnCliente = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         lbIdentificacion = new javax.swing.JLabel();
         lbIdentificacion1 = new javax.swing.JLabel();
@@ -59,14 +72,17 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
         jPanel3 = new javax.swing.JPanel();
         btnGuardaar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtPrueba = new javax.swing.JTextArea();
+        btnVolver = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cliente");
+        setBackground(new java.awt.Color(0, 204, 204));
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
         btnInicio.setFont(new java.awt.Font("Adobe Caslon Pro Bold", 0, 11)); // NOI18N
-        btnInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/House-07.jpeg"))); // NOI18N
+        btnInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/House-072.png"))); // NOI18N
         btnInicio.setText("INICIO");
         btnInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,9 +90,9 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
             }
         });
 
-        btnVentas.setBackground(new java.awt.Color(33, 150, 243));
+        btnVentas.setBackground(new java.awt.Color(255, 255, 255));
         btnVentas.setFont(new java.awt.Font("Adobe Caslon Pro Bold", 0, 11)); // NOI18N
-        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Sales-Order.jpeg"))); // NOI18N
+        btnVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Sales-Orderrr.png"))); // NOI18N
         btnVentas.setText("VENTA");
         btnVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,28 +101,26 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
         });
 
         btnInventario.setFont(new java.awt.Font("Adobe Caslon Pro Bold", 0, 11)); // NOI18N
-        btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Bill.jpeg"))); // NOI18N
+        btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Billl.png"))); // NOI18N
         btnInventario.setText("INVENTARIO");
-
-        btnCliente.setFont(new java.awt.Font("Adobe Caslon Pro Bold", 0, 11)); // NOI18N
-        btnCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Customer.jpeg"))); // NOI18N
-        btnCliente.setText("CLIENTES");
-        btnCliente.setToolTipText("");
+        btnInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInventarioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(93, 93, 93)
                 .addComponent(btnInicio)
-                .addGap(54, 54, 54)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addComponent(btnVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addGap(101, 101, 101)
                 .addComponent(btnInventario)
-                .addGap(53, 53, 53)
-                .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                .addGap(61, 61, 61))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,10 +129,13 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInicio)
                     .addComponent(btnVentas)
-                    .addComponent(btnInventario)
-                    .addComponent(btnCliente))
+                    .addComponent(btnInventario))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
+
+        jPanel2.setBackground(new java.awt.Color(0, 204, 204));
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setForeground(new java.awt.Color(0, 0, 255));
 
         lbIdentificacion.setFont(new java.awt.Font("Engravers MT", 0, 10)); // NOI18N
         lbIdentificacion.setText("Nombre: ");
@@ -138,9 +155,17 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
         lbIdentificacion5.setFont(new java.awt.Font("Engravers MT", 0, 10)); // NOI18N
         lbIdentificacion5.setText("direccion: ");
 
+        txtCedula.setToolTipText("");
+        txtCedula.setMaximumSize(new java.awt.Dimension(11, 11));
+        txtCedula.setVerifyInputWhenFocusTarget(false);
         txtCedula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCedulaActionPerformed(evt);
+            }
+        });
+        txtCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaKeyTyped(evt);
             }
         });
 
@@ -153,6 +178,29 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
 
         lbIdentificacion6.setFont(new java.awt.Font("Engravers MT", 0, 10)); // NOI18N
         lbIdentificacion6.setText("ciudad: ");
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -168,9 +216,9 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(cboCiudad, javax.swing.GroupLayout.Alignment.LEADING, 0, 145, Short.MAX_VALUE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCedula, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtTelefono))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lbIdentificacion4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbIdentificacion5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
@@ -180,7 +228,7 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
                     .addComponent(txtApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
                     .addComponent(txtDireccion)
                     .addComponent(txtCorreo))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 112, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(34, 34, 34)
@@ -224,46 +272,60 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
                     .addContainerGap(174, Short.MAX_VALUE)))
         );
 
-        btnGuardaar.setFont(new java.awt.Font("Adobe Caslon Pro Bold", 0, 11)); // NOI18N
-        btnGuardaar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Save.jpeg"))); // NOI18N
+        jPanel3.setBackground(new java.awt.Color(0, 204, 204));
+        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btnGuardaar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnGuardaar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardaar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Savee.png"))); // NOI18N
         btnGuardaar.setText("Guardar");
+        btnGuardaar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGuardaar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardaarActionPerformed(evt);
             }
         });
 
-        btnModificar.setFont(new java.awt.Font("Adobe Caslon Pro Bold", 0, 11)); // NOI18N
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Data-Edit.jpeg"))); // NOI18N
+        btnModificar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Modificar.png"))); // NOI18N
         btnModificar.setText("Modificar");
+        btnModificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        btnSalir.setFont(new java.awt.Font("Adobe Caslon Pro Bold", 0, 11)); // NOI18N
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Logout.jpeg"))); // NOI18N
-        btnSalir.setText("Salir");
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+        btnVolver.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnVolver.setForeground(new java.awt.Color(255, 255, 255));
+        btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Atras.png"))); // NOI18N
+        btnVolver.setText("Volver");
+        btnVolver.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
+                btnVolverActionPerformed(evt);
             }
         });
 
-        txtPrueba.setColumns(20);
-        txtPrueba.setRows(5);
-        jScrollPane1.setViewportView(txtPrueba);
+        btnNuevo.setForeground(new java.awt.Color(255, 255, 255));
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Folder-nuevo.png"))); // NOI18N
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(btnGuardaar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(btnModificar)
-                .addGap(56, 56, 56)
-                .addComponent(btnSalir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(48, 48, 48)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnGuardaar, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnVolver)
+                .addGap(29, 29, 29))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,13 +333,10 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
                 .addGap(26, 26, 26)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardaar)
-                    .addComponent(btnSalir)
-                    .addComponent(btnModificar))
-                .addContainerGap(28, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                    .addComponent(btnModificar)
+                    .addComponent(btnVolver)
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -285,16 +344,16 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 7, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,7 +371,10 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        // TODO add your handling code here:
+        frmMenuPrincipal fr = new  frmMenuPrincipal();
+        fr.setLocationRelativeTo(null);
+        fr.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnGuardaarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardaarActionPerformed
@@ -320,22 +382,70 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
     }//GEN-LAST:event_btnGuardaarActionPerformed
 
     private void btnVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnVentasActionPerformed
 
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
-        if(!crC.esidentificacionClietValido(txtCedula.getText())){
+    
+    /*
+    if(!crC.esclIdentificacionValido(txtCedula.getText())){
+    JOptionPane.showMessageDialog(this, "longitud de la identificacion inválido");
+    txtCedula.requestFocus();
+     **/ 
+        /*
+        if(!crC.esclIdentificacionValido(txtCedula.getText())){
             JOptionPane.showMessageDialog(this, "longitud de la identificacion inválido");
              txtCedula.requestFocus();
+        **/
     }//GEN-LAST:event_txtCedulaActionPerformed
-    }
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-     
-    }//GEN-LAST:event_btnSalirActionPerformed
+   
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+         frmMenuPrincipal fr = new  frmMenuPrincipal();
+        fr.setLocationRelativeTo(null);
+        fr.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
 
     private void cboCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboCiudadActionPerformed
-        this.CargarComboCiudad();
+       Municipio tipo = (Municipio)this.cboCiudad.getSelectedItem();
+              tipoh = tipo.getCodMunic();
     }//GEN-LAST:event_cboCiudadActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+       
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        v.soloLetras(evt);
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyTyped
+      v.soloNumeros(evt);
+    }//GEN-LAST:event_txtCedulaKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+       v.soloNumeros(evt);
+         if(txtCedula.getText().length()==11)
+      {
+          evt.consume();
+      } else {
+      }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
+        v.soloLetras(evt);
+    }//GEN-LAST:event_txtApellidoKeyTyped
+
+    private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
+    frmInventario fr = new frmInventario();
+    fr.setLocationRelativeTo(null);
+    fr.setVisible(true);
+    dispose();
+    }//GEN-LAST:event_btnInventarioActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+       this.limpiar();
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -380,21 +490,26 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
         c.setApellidos(txtApellido.getText());
         c.setDireccion(this.txtDireccion.getText());
         c.setTelefono(this.txtTelefono.getText());
-        c.setCiudad(this.cboCiudad.getUIClassID());
         c.setEmail(this.txtCorreo.getText());
+        c.setCiudad(this.tipoh);
+        c.setEstado("ACTIVO");
         String msg=crC.insert(c);
         JOptionPane.showMessageDialog(this, msg);  
     }
     
-    
-    public void CargarComboCiudad(){
-        String sql="SELECT `NombreMun` FROM municipio";
-       // DefaultComboBoxModel md1 = new DefaultComboBoxModel(1000);
-        //this.cboCiudad.setModel(md1);
-    }
+  
+    public void cargarCombobox() throws ClassNotFoundException{
+        CtrlRegistroMun crM=new CtrlRegistroMun();
+        ArrayList<Municipio> lista = crM.getRecords();
+       for(int i=0;i<lista.size();i=i+1)
+          {
+            Municipio oItem = new Municipio (lista.get(i).getCodMunic(),lista.get(i).getNombreMunicipio());
+           this.cboCiudad.addItem(oItem); 
+         }
+   }
+    /*
     private void mostrar(){
     try {
-        
         ArrayList<Cliente>  lista =  crC.getRecords();
         
         for (int i = 0; i < lista.size(); i++) {
@@ -406,20 +521,32 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
     }
       
     }
+    **/
+     public void limpiar(){
+       this.txtCedula.setText("");
+       this.txtNombre.setText("");
+       this.txtApellido.setText("");
+       this.txtDireccion.setText("");
+       this.txtTelefono.setText("");
+       this.txtCorreo.setText("");
+       
+       
+    }  
+    
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCliente;
     private javax.swing.JButton btnGuardaar;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnVentas;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox cboCiudad;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbIdentificacion;
     private javax.swing.JLabel lbIdentificacion1;
     private javax.swing.JLabel lbIdentificacion2;
@@ -432,7 +559,6 @@ CtrolRegistroCliente crC= new CtrolRegistroCliente ();
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextArea txtPrueba;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

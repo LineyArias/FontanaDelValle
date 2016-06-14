@@ -17,7 +17,7 @@ public class dbConexion {
     
     public dbConexion() throws SQLException, ClassNotFoundException  {
        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/fontana", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/fontanaNuevo", "root", "root");
             if (conn == null) {
                 throw new SQLException("Problema de conexion con el Servidor");
             } else {

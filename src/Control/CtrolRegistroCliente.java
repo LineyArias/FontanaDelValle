@@ -16,25 +16,32 @@ public class CtrolRegistroCliente {
     dbConexion conexion; 
      public String insert(Cliente c) {  
          
-        if (!esidentificacionClietValido(c.getIdentificacion())){
+        if (!esclIdentificacionValido(c.getIdentificacion())){
             return "Longitud de la identificacion inválido ";
         }
-         if (!esNombreClientValido(c.getNombre())){
+         if (!esclNombreValido(c.getNombre())){
             return "Nombre Vacio";
         }
-        if (!esApellidoValido(c.getApellidos())){
+        if (!esclApellidoValido(c.getApellidos())){
             return "Apellido Vacio";
         }
-        if (!esdireccionValido(c.getDireccion())){
-            return "No existe ninguna direccion";
+        if (!esclDireccionValido(c.getDireccion())){
+            return "Por favor escriba una direccion ";
         }
-        if (!esTelefonoValido(c.getTelefono())){
-            return "Escriba un telefono";
+        if (!esclTelefonoValido(c.getTelefono())){
+            return "El telefono debe contener mas de 6 digitos";
         }
        
-         if (!esMunicipio_CodigoMunValido(c.getCiudad())){
+         if (!esclCorreoValido(c.getEmail())){
+            return "Escriba";
+        }
+        
+         if (!esclMunicipioValido(c.getCiudad())){
             return "Seleccione una ciudad";
         }
+         
+        
+         
         try {
             conexion = new dbConexion();
             ClienteDAO CDao= new ClienteDAO(conexion);
@@ -53,39 +60,10 @@ public class CtrolRegistroCliente {
         
      
     }
-    private boolean esApellidoValido(String apellidos) {
-        return apellidos.trim().length()>0;
-    }
-    /*
-    private boolean esNombreValido(String nombre) {
-        return nombre.trim().length()>0;
-        
-    }
     
-    public boolean esUsernameValido(String userName) {
-        return userName.trim().length()>4 && userName.trim().length()<8;
-    }
-    **/
-
-   public boolean esidentificacionClietValido(String Identificacion) {
-      return Identificacion.trim().length()<12;  
-    }
-
-    private boolean esNombreClientValido(String nombre) {
-       return nombre.trim().length()>0;
-    }
-
-    private boolean esdireccionValido(String direccion) {
-      return direccion.trim().length()>0;
-    }
-
-    private boolean esTelefonoValido(String telefono) {
-      return telefono.trim().length()>5 && telefono.trim().length()<11;  
-    }
-
-    private boolean esMunicipio_CodigoMunValido(String ciudad) {
-       return ciudad.trim().length()>0; //To change body of generated methods, choose Tools | Templates.
-    }
+   // private boolean esMunicipio_CodigoMunValido(String ciudad) {
+    //   return ciudad.trim().length()>0; //To change body of generated methods, choose Tools | Templates.
+    //}
     
     public ArrayList<Cliente> getRecords () throws ClassNotFoundException{
         try{
@@ -97,5 +75,37 @@ public class CtrolRegistroCliente {
             Logger.getLogger(CtrolRegistroCliente.class.getName()).log(Level.SEVERE, null,ex);
         }
         return null;
+    }
+
+    public boolean esclIdentificacionValido(String identificacion) {
+       return identificacion.trim().length()<12;   //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private boolean esclNombreValido(String nombre) {
+         return nombre.trim().length()>0; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private boolean esclApellidoValido(String apellidos) {
+        return apellidos.trim().length()>0; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private boolean esclDireccionValido(String direccion) {
+        return direccion.trim().length()>0; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private boolean esclTelefonoValido(String telefono) {
+        return telefono.trim().length()>5 && telefono.trim().length()<11;  //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private boolean esclCorreoValido(String email) {
+        return email.trim().length()>0; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private boolean esclMunicipioValido(String ciudad) {
+        return ciudad.trim().length()>0 ; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private boolean esclEstadoValido(String estado) {
+         return estado.trim().length()>0 ;//To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -26,15 +26,16 @@ public class ClienteDAO {
     public boolean insert(Cliente c) throws SQLException {
         //Insertar en el Sistema de Base de Datos
         boolean result = false;
-        String sql = "insert into Cliente (identificacionCliet,NombreClient,Apellido,direccion,Telefono,Municipio_CodigoMun,correo) values (?,?,?,?,?,?,?)";
+        String sql = "insert into Cliente (clIdentificacion,clNombre,clApellido,clDireccion,clTelefono,clCorreo,clMunicipio,clEstado) values (?,?,?,?,?,?,?,?)";
         java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
         pst.setString(1, c.getIdentificacion());
         pst.setString(2, c.getNombre());
         pst.setString(3, c.getApellidos());
         pst.setString(4, c.getDireccion());
         pst.setString(5, c.getTelefono());
-        pst.setString(6, c.getCiudad());
-        pst.setString(7, c.getEmail());
+        pst.setString(6, c.getEmail());
+        pst.setString(7, c.getCiudad());
+        pst.setString(8, c.getEstado());
         if (pst.executeUpdate() > 0) {
             conexion.Commit();
             result = true;
@@ -57,7 +58,7 @@ public class ClienteDAO {
 
     public Cliente getPk(String identificacionCliet) throws SQLException {
        Cliente c=null;
-        String sql = "select * from Cliente where identificacionCliet=? ";
+        String sql = "select * from Cliente where clIdentificacion=? ";
         java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
         pst.setString(1, identificacionCliet);
         ResultSet rs = conexion.Query(pst);
@@ -73,16 +74,17 @@ public class ClienteDAO {
     public void update(String pk,Cliente c) throws SQLException {
         // actualizar objeto de la lista
         boolean result = false;
-        String sql = "update Cliente set identificacionCliet= ?, NombreClient=?,Apellido=?,direccion=?,Telefono=?, Municipio_CodigoMun=?, correo=? where identificacionCliet=?";
+        String sql = "update Cliente set clIdentificacion= ?, clNombre=?,clApellido=?,clDireccion=?,clTelefono=?, clCorreo=?, clMunicipio=?, clEstado=? where identificacionCliet=?";
 	java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
 	pst.setString(1, c.getIdentificacion());
         pst.setString(2, c.getNombre());
         pst.setString(3, c.getApellidos());
         pst.setString(4, c.getDireccion());
         pst.setString(5, c.getTelefono());
-        pst.setString(6, c.getCiudad());
-        pst.setString(7, c.getEmail());
-        pst.setString(8, pk);
+        pst.setString(7, c.getCiudad());
+        pst.setString(6, c.getEmail());
+        pst.setString(8, c.getEstado());
+        pst.setString(9, pk);
         this.lError = true;
 	if (conexion.Update(pst) > 0) {
             conexion.Commit();
@@ -92,7 +94,7 @@ public class ClienteDAO {
 
     public void delete(String pk) throws SQLException {
         //eleminar objeto de la lista
-        String sql = "delete from Cliente where identificacionCliet=?";
+        String sql = "delete from Cliente where clIdentificacion=?";
 	java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
 	pst.setString(1,pk);
         this.lError = true;
@@ -105,13 +107,14 @@ public class ClienteDAO {
 
     private Cliente MapearObjeto(ResultSet rs) throws SQLException {
         Cliente c = new Cliente();
-        c.setIdentificacion(rs.getString("identificacionCliet"));
-        c.setNombre(rs.getString("NombreClient"));
-        c.setApellidos(rs.getString("Apellido"));
-        c.setDireccion(rs.getString("direccion"));
-        c.setTelefono(rs.getString("Telefono"));
-        c.setCiudad(rs.getString("Municipio_CodigoMun"));
-        c.setEmail(rs.getString("correo"));
+        c.setIdentificacion(rs.getString("clIdentificacion"));
+        c.setNombre(rs.getString("clNombre"));
+        c.setApellidos(rs.getString("clApellido"));
+        c.setDireccion(rs.getString("clDireccion"));
+        c.setTelefono(rs.getString("clTelefono"));
+        c.setCiudad(rs.getString("clCorreo"));
+        c.setEmail(rs.getString("clMunicipio"));
+        c.setEstado(rs.getString("clEstado"));
         return c;
     } 
 }

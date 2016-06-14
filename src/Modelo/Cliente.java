@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
 
+package Modelo;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 /**
  *
  * @author Leam
@@ -15,19 +18,23 @@ public class Cliente {
     private String apellidos;
     private String direccion;
     private String telefono;
+    private String email; 
     private String ciudad;
-    private String email;  
+    private String estado;
+  //  private DATE  fechaRegistro;
+     
    
    // constructor sobrecargado
 
-    public Cliente(String identificacion, String nombre, String apellidos, String direccion, String telefono, String ciudad,String email) {
+    public Cliente(String identificacion, String nombre, String apellidos, String direccion, String telefono,String email,String ciudad,String estado) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.direccion = direccion;
         this.telefono = telefono;
-        this.ciudad=ciudad;
         this.email = email;
+         this.ciudad=ciudad;
+         this.estado=estado;
     }
 // constructor por defecto 
     public Cliente() {
@@ -103,6 +110,20 @@ public class Cliente {
      */
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
+    }
+
+    /**
+     * @return the estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
     

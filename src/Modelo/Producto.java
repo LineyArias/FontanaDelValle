@@ -11,6 +11,15 @@ public class Producto {
     private int prCantidad;
     private float prPrecio;
 
+    public Producto(int prCodigo, String prDescripcion, String prEstado, int prCantidad, float prPrecio) {
+        this.prCodigo = prCodigo;
+        this.prDescripcion = prDescripcion;
+        this.prEstado = prEstado;
+        this.prCantidad = prCantidad;
+        this.prPrecio = prPrecio;
+    }
+    
+
     
     public Producto(){}
     
