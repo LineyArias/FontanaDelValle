@@ -56,6 +56,19 @@ public class ProductoDAO {
         rs.close();
         return lst;
     }
+    
+    public ArrayList<Producto> getProductos() throws SQLException {
+       ArrayList<Producto> lst = new ArrayList<Producto>();
+        Producto p=null;        
+        String sql = "select * from producto WHERE prEstado = 'ACTIVO' AND prCantidad > 0";
+        ResultSet rs = conexion.Query(sql);
+        while (rs.next()) {
+            p = MapearObjeto(rs);
+            lst.add(p);
+        }
+        rs.close();
+        return lst;
+    }
      
     public Producto getProductoPorId(int idProducto) throws SQLException {
        

@@ -76,6 +76,17 @@ public class CtrolRegistroCliente {
         }
         return null;
     }
+    
+    public Cliente getPk(String identificacion){
+        try {
+            conexion = new dbConexion();
+            ClienteDAO cDao= new ClienteDAO(conexion);
+            return cDao.getPk(identificacion);
+          } catch (SQLException | ClassNotFoundException exc) {
+            Logger.getLogger(CtrolRegistroCliente.class.getName()).log(Level.SEVERE, null, exc);            
+        }  
+        return null;
+    }    
 
     public boolean esclIdentificacionValido(String identificacion) {
        return identificacion.trim().length()<12;   //To change body of generated methods, choose Tools | Templates.

@@ -21,7 +21,7 @@ public class Validacion {
         if((c<'a' || c>'z') && (c<'A' || c>'Z')) evt.consume();
     }
     
-    /**
+    
     public boolean esApellidoValido(String apellido){
         return apellido.trim().length() >0;
     }
@@ -59,5 +59,5 @@ public class Validacion {
         return apellido.trim().length() >2;
     }   
 
-   **/ 
+   
 }

@@ -56,11 +56,11 @@ public class ClienteDAO {
         return lst;
     }
 
-    public Cliente getPk(String identificacionCliet) throws SQLException {
+    public Cliente getPk(String identificacion) throws SQLException {
        Cliente c=null;
         String sql = "select * from Cliente where clIdentificacion=? ";
         java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
-        pst.setString(1, identificacionCliet);
+        pst.setString(1, identificacion);
         ResultSet rs = conexion.Query(pst);
         lError = true;
         if (rs.next()) {

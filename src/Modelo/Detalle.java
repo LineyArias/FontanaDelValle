@@ -15,6 +15,9 @@ public class Detalle {
     private float  dtPrecio;
     private int   dtPCProducto;
     private int   dtCFactura; 
+    private float dtSubTotal;
+
+   
 
     public Detalle() {
     }
@@ -95,6 +98,14 @@ public class Detalle {
      */
     public void setDtCFactura(int dtCFactura) {
         this.dtCFactura = dtCFactura;
+    }
+    
+     public float getDtSubTotal() {
+        return dtSubTotal;
+    }
+
+    public void setDtSubTotal(float dtSubTotal) {
+        this.dtSubTotal = dtSubTotal;
     }
     
     

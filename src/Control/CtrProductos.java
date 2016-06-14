@@ -50,6 +50,17 @@ public class CtrProductos {
         return null;
     } 
     
+     public ArrayList<Producto> getProductos(){
+        try {
+             conexion = new dbConexion();
+            ProductoDAO pDao= new ProductoDAO(conexion);
+            return pDao.getProductos();
+        } catch (SQLException | ClassNotFoundException exc) {
+            Logger.getLogger(CtrProductos.class.getName()).log(Level.SEVERE, null, exc);            
+        }   
+        return null;
+    } 
+    
      public Producto getPk(int id){
         try {
             conexion = new dbConexion();

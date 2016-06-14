@@ -19,6 +19,11 @@ public class Producto {
         this.prPrecio = prPrecio;
     }
     
+    public Producto(int prCodigo, String prDescripcion) {
+        this.prCodigo = prCodigo;
+        this.prDescripcion = prDescripcion;        
+    }
+    
 
     
     public Producto(){}
@@ -61,6 +66,12 @@ public class Producto {
 
     public void setPrPrecio(float prPrecio) {
         this.prPrecio = prPrecio;
+    }
+    
+     @Override
+    public String toString()
+    {
+        return prDescripcion;
     }
     
     
