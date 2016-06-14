@@ -27,13 +27,13 @@ public class VentaDAO {
         this.conexion = conexion;
     }
     public VentaDAO(dbConexion conexion) {
-        this.setConexion(conexion);
+        this.conexion = conexion;
     }
     
-     public boolean insert(Ventas c) throws SQLException {
+     public int insert(Ventas c) throws SQLException {
         //Insertar en el Sistema de Base de Datos
-        boolean result = false;
-        String sql = "insert into factura (ftSubtotal,tfTotal,ftEstado,ftCliente,ftTrabajador) values (,?,?,?)";
+        int result = 0;
+        String sql = "insert into factura (ftSubtotal,tfTotal,ftEstado,ftCliente,ftTrabajador) values (?,?,?,?,?)";
         java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
         pst.setFloat(1, c.getSubtotal());
         pst.setFloat(2, c.getTotal());
@@ -41,8 +41,8 @@ public class VentaDAO {
         pst.setString(4, c.getCliente());
         pst.setString(5, c.getTrabajador());
         if (pst.executeUpdate() > 0) {
-            conexion.Commit();
-            result = true;
+            conexion.Commit();            
+            result = conexion.getLastId();
         }
         return result;
     }

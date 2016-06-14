@@ -6,15 +6,18 @@
 package Vista;
 
 import Control.CtrProductos;
+import Control.CtrVentas;
 import Control.CtrolRegistroCliente;
 import Modelo.Cliente;
 import Modelo.Detalle;
 import Modelo.DetalleJT;
 import Modelo.Producto;
+import Modelo.Ventas;
 import Utiles.Validacion;
 import com.sun.glass.events.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +28,8 @@ public class frmIngresarPedido extends javax.swing.JFrame {
 
     CtrolRegistroCliente ctrCliente = new CtrolRegistroCliente();
     CtrProductos ctrProducto = new CtrProductos();
+    CtrVentas ctrVenta = new CtrVentas();
+    
     Validacion val = new Validacion();
     ArrayList<Detalle> lstDetalle = new ArrayList<Detalle>();
     DetalleJT modeloTabla;
@@ -294,6 +299,11 @@ public class frmIngresarPedido extends javax.swing.JFrame {
 
         btnResgistroPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Agreement-02.png"))); // NOI18N
         btnResgistroPedido.setText("Registrar Pedido ");
+        btnResgistroPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResgistroPedidoActionPerformed(evt);
+            }
+        });
 
         btnAtras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Logout.png"))); // NOI18N
         btnAtras.setText("Atras");
@@ -421,6 +431,19 @@ public class frmIngresarPedido extends javax.swing.JFrame {
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         val.soloNumeros(evt);
     }//GEN-LAST:event_txtCantidadKeyTyped
+
+    private void btnResgistroPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResgistroPedidoActionPerformed
+        Ventas obj = new Ventas();
+        obj.setCliente("1");
+        obj.setEstado("PEDIDO");
+        obj.setSubtotal(1000);
+        obj.setTotal(Float.parseFloat(txtTotal.getText()));
+        obj.setTrabajador("111");
+        
+        int result = ctrVenta.insert(obj, lstDetalle);
+        JOptionPane.showMessageDialog(this, result);
+        
+    }//GEN-LAST:event_btnResgistroPedidoActionPerformed
 
     private void ActualizarTotal(){
         float sum =0;

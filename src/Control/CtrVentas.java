@@ -6,6 +6,7 @@
 package Control;
 
 
+import Modelo.Detalle;
 import Modelo.VentaDAO;
 import Modelo.Ventas;
 import Modelo.dbConexion;
@@ -30,5 +31,21 @@ public class CtrVentas {
             Logger.getLogger(CtrVentas.class.getName()).log(Level.SEVERE, null,ex);
         }
         return null;
+    }
+    
+    public int insert(Ventas v, ArrayList<Detalle> detalle){  
+               
+        try {
+            conexion = new dbConexion();
+            VentaDAO vDao = new  VentaDAO (conexion);
+            int codigo = vDao.insert(v);
+            
+            
+            
+            return codigo;
+        } catch (SQLException | ClassNotFoundException exc) {
+            Logger.getLogger(CtrProductos.class.getName()).log(Level.SEVERE, null, exc);            
+        }        
+        return 0;
     }
 }
