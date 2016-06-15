@@ -26,7 +26,7 @@ public class DetalleDAO {
         this.setConexion(conexion);
     }
    
-      public boolean insert(Detalle c,Map Producto) throws SQLException {
+      public boolean insert(Detalle c) throws SQLException {
            boolean result = false;
           try{
         //Insertar en el Sistema de Base de Datos
@@ -42,13 +42,10 @@ public class DetalleDAO {
             conexion.Commit();
             result = true;
         }
-         Iterator it = Producto.entrySet().iterator();
-         while (it.hasNext()) {
-                Map.Entry e = (Map.Entry)it.next();               
-              //actualiza stock
-         this.update(sql, null);
-            }
-            return true;
+                     
+       
+           
+           
           }catch(SQLException e){
             System.err.println( e.getMessage() );
         }

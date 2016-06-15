@@ -38,7 +38,7 @@ public class VentaDAO {
         pst.setFloat(1, c.getSubtotal());
         pst.setFloat(2, c.getTotal());
         pst.setString(3, c.getEstado());
-        pst.setString(4, c.getCliente());
+        pst.setInt(4, c.getCliente());
         pst.setString(5, c.getTrabajador());
         if (pst.executeUpdate() > 0) {
             conexion.Commit();            
@@ -81,7 +81,7 @@ public class VentaDAO {
         c.setSubtotal(rs.getFloat("ftSubtotal"));
         c.setTotal(rs.getFloat("tfTotal"));
         c.setEstado(rs.getString("ftEstado"));
-        c.setCliente(rs.getString("ftCliente"));
+        c.setCliente(rs.getInt("ftCliente"));
         c.setTrabajador(rs.getString("ftTrabajador"));   
         return c;
     }

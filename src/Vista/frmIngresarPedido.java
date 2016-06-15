@@ -75,6 +75,7 @@ public class frmIngresarPedido extends javax.swing.JFrame {
         lbIdentificacion = new javax.swing.JLabel();
         lbIdentificacion1 = new javax.swing.JLabel();
         btnTraerDatos = new javax.swing.JButton();
+        txtCodigo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
@@ -228,6 +229,12 @@ public class frmIngresarPedido extends javax.swing.JFrame {
             }
         });
 
+        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -242,7 +249,9 @@ public class frmIngresarPedido extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnTraerDatos))
+                        .addComponent(btnTraerDatos)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(152, 152, 152))
         );
@@ -253,7 +262,8 @@ public class frmIngresarPedido extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbIdentificacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTraerDatos))
+                    .addComponent(btnTraerDatos)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -434,16 +444,20 @@ public class frmIngresarPedido extends javax.swing.JFrame {
 
     private void btnResgistroPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResgistroPedidoActionPerformed
         Ventas obj = new Ventas();
-        obj.setCliente("1");
+        obj.setCliente(1);
         obj.setEstado("PEDIDO");
         obj.setSubtotal(1000);
         obj.setTotal(Float.parseFloat(txtTotal.getText()));
-        obj.setTrabajador("111");
+        obj.setTrabajador("1065594417");
         
         int result = ctrVenta.insert(obj, lstDetalle);
         JOptionPane.showMessageDialog(this, result);
         
     }//GEN-LAST:event_btnResgistroPedidoActionPerformed
+
+    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
+         this.txtCodigo.setVisible(false);
+    }//GEN-LAST:event_txtCodigoActionPerformed
 
     private void ActualizarTotal(){
         float sum =0;
@@ -544,6 +558,7 @@ public class frmIngresarPedido extends javax.swing.JFrame {
     private javax.swing.JTable tblDescripcion;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCedula;
+    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables

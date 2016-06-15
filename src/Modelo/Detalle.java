@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Modelo;
-
+import java.util.Map;
 /**
  *
  * @author Leam

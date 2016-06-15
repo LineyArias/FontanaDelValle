@@ -13,13 +13,13 @@ public class Ventas {
     private float subtotal;
     private float total;
     private String Estado;
-    private String Cliente;
+    private int Cliente;
     private String  trabajador;
 
     public Ventas() {
     }
 
-    public Ventas(float subtotal, float total, String Estado, String Cliente, String trabajador) {
+    public Ventas(float subtotal, float total, String Estado, int Cliente, String trabajador) {
         this.subtotal = subtotal;
         this.total = total;
         this.Estado = Estado;
@@ -72,14 +72,14 @@ public class Ventas {
     /**
      * @return the Cliente
      */
-    public String getCliente() {
+    public int getCliente() {
         return Cliente;
     }
 
     /**
      * @param Cliente the Cliente to set
      */
-    public void setCliente(String Cliente) {
+    public void setCliente(int Cliente) {
         this.Cliente = Cliente;
     }
 
