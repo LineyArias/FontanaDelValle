@@ -45,6 +45,22 @@ public class TrabajadorDao {
         }
         return result;
     }
+    
+    public Trabajador InicioSession(String identificacion, String clave) throws SQLException {
+        Trabajador c=null;
+        String sql = "select * from trabajadores where trCedula=? AND trClave = SHA1(?) AND trEstado='ACTIVO' ";
+        java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
+        pst.setString(1, identificacion);
+        pst.setString(2, clave);
+        ResultSet rs = conexion.Query(pst);
+        lError = true;
+        if (rs.next()) {
+           c = MapearObjeto(rs);
+            lError = false;
+        }
+        rs.close();
+        return c;
+    }
 
     public ArrayList<Trabajador> getRecords() throws SQLException {
         ArrayList<Trabajador> lst = new ArrayList<Trabajador>();

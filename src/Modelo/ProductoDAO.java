@@ -82,6 +82,19 @@ public class ProductoDAO {
         return p;
     }
     
+    public boolean actualizarCantidad(Producto pr) throws SQLException {  
+        boolean resul= false;
+        String sql = "UPDATE producto  SET prCantidad = prCantidad + ? WHERE producto.prCodigo=?";
+        java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
+        pst.setInt(1,pr.getPrCantidad());
+        pst.setInt(2, pr.getPrCodigo());        
+        if (conexion.Update(pst) > 0) {
+            conexion.Commit();        
+            resul = true;
+        }
+        return resul;
+    }
+    
     private Producto MapearObjeto(ResultSet rs) throws SQLException {
         Producto pr = new Producto();        
         pr.setPrCodigo(rs.getInt("prCodigo"));

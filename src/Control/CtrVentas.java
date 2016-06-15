@@ -13,9 +13,6 @@ import Modelo.Ventas;
 import Modelo.dbConexion;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,25 +34,19 @@ public class CtrVentas {
         return null;
     }
     
-    public int insert(Ventas v, ArrayList<Detalle> detalle){  
-        
-             
-        try {
-            
-            conexion = new dbConexion();
-           
+    public int insert(Ventas v, ArrayList<Detalle> detalle){                       
+        try {            
+            conexion = new dbConexion();           
             VentaDAO vDao = new  VentaDAO (conexion);
             int codigo = vDao.insert(v);
             if (codigo>0){
                 DetalleDAO dDao= new DetalleDAO(conexion);
-                Iterator it = detalle./*entrySet*/iterator();
-            
-            while (it.hasNext()){
-                HashMap.Entry d=(HashMap.Entry)it.next();
-               Detalle det=  (Detalle)d.getValue();   
-               det.setDtCFactura(codigo);
-               dDao.insert(det);
-            }
+                
+                for (Detalle lst : detalle) {
+                   Detalle det  = (Detalle)lst;
+                   det.setDtCFactura(codigo);
+                   dDao.insert(det);
+                }                          
             } 
             return codigo;
         } catch (SQLException | ClassNotFoundException exc) {

@@ -58,6 +58,18 @@ public class CtrTrabajador {
         }  
      
     }
+      
+    public Trabajador validarUsuario(String id, String clave) throws SQLException{
+                        
+         try{
+            conexion = new dbConexion();
+            TrabajadorDao cDao =  new TrabajadorDao(conexion);
+            return cDao.InicioSession(id, clave);            
+        } catch (SQLException | ClassNotFoundException ex){
+            Logger.getLogger(CtrTrabajador.class.getName()).log(Level.SEVERE, null,ex);
+        }
+         return null;
+    }
      
      
      

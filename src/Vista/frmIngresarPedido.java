@@ -16,8 +16,7 @@ import Modelo.Ventas;
 import Utiles.Validacion;
 import com.sun.glass.events.KeyEvent;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import Control.Session;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,6 +28,7 @@ public class frmIngresarPedido extends javax.swing.JFrame {
     CtrolRegistroCliente ctrCliente = new CtrolRegistroCliente();
     CtrProductos ctrProducto = new CtrProductos();
     CtrVentas ctrVenta = new CtrVentas();
+    Session sesion = Session.GetSession();
     
     Validacion val = new Validacion();
     ArrayList<Detalle> lstDetalle = new ArrayList<Detalle>();
@@ -45,6 +45,7 @@ public class frmIngresarPedido extends javax.swing.JFrame {
         initComponents();
         cargarProductos();
         initTabla();
+        this.txtCodigo.setVisible(false);
     }
 
     /**
@@ -443,12 +444,18 @@ public class frmIngresarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCantidadKeyTyped
 
     private void btnResgistroPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResgistroPedidoActionPerformed
+      
+        if (txtCodigo.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Cliente no Existe");
+            return;
+        }
+        
         Ventas obj = new Ventas();
-        obj.setCliente(1);
+        obj.setCliente(Integer.parseInt(txtCodigo.getText()));
         obj.setEstado("PEDIDO");
         obj.setSubtotal(1000);
         obj.setTotal(Float.parseFloat(txtTotal.getText()));
-        obj.setTrabajador("1065594417");
+        obj.setTrabajador(sesion.GetTrabajador().getCedula());
         
         int result = ctrVenta.insert(obj, lstDetalle);
         JOptionPane.showMessageDialog(this, result);
@@ -456,7 +463,7 @@ public class frmIngresarPedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btnResgistroPedidoActionPerformed
 
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
-         this.txtCodigo.setVisible(false);
+         
     }//GEN-LAST:event_txtCodigoActionPerformed
 
     private void ActualizarTotal(){
@@ -471,13 +478,13 @@ public class frmIngresarPedido extends javax.swing.JFrame {
         if (txtCedula.getText().equals("")){
                JOptionPane.showMessageDialog(this, "Ingrese la Cédula");
                return;
-           }
-           
-        Cliente   objClie = null;
-        objClie = ctrCliente.getPk(txtCedula.getText());
+           }           
+        Cliente   objClie = ctrCliente.getPk(txtCedula.getText());        
         if (objClie != null){
             txtNombre.setText(objClie.getNombre() + " " + objClie.getApellidos());
+            txtCodigo.setText(Integer.toString(objClie.getCodigo()));
         }else{
+            txtCodigo.setText("");
             JOptionPane.showMessageDialog(this, "Cliente no se encuentra Registrado.");
         }
     }

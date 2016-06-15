@@ -23,15 +23,12 @@ public class DetalleDAO {
         this.conexion = conexion;
     }
     public DetalleDAO(dbConexion conexion) {
-        this.setConexion(conexion);
+        this.conexion = conexion;
     }
    
-      public boolean insert(Detalle c) throws SQLException {
-           boolean result = false;
-          try{
-        //Insertar en el Sistema de Base de Datos
-       
-        String sql = "insert into detalle (dtDescripcion,dtCantidad,dtPrecio,dtProducto,dtFactura) values (,?,?,?)";
+    public boolean insert(Detalle c) throws SQLException {
+        boolean result = false;                
+        String sql = "insert into detalle (dtDescripcion,dtCantidad,dtPrecio,dtProducto,dtFactura) values (?,?,?,?,?)";
         java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
         pst.setString(1, c.getDtDescripcion());
         pst.setInt(2, c.getDtCantidad());
@@ -40,36 +37,22 @@ public class DetalleDAO {
         pst.setInt(5, c.getDtCFactura());
         if (pst.executeUpdate() > 0) {
             conexion.Commit();
+            this.actualizarCantidad(c);
             result = true;
-        }
-                     
-       
-           
-           
-          }catch(SQLException e){
-            System.err.println( e.getMessage() );
-        }
-        return result;
-        
-        //registro de venta del producto
-        
-        
+        }                                                  
+        return result;                               
     }
     
   
       
-        public void update(String pk,Producto c) throws SQLException {
-        // actualizar objeto de la lista
-        boolean result = false;
-        String sql = "UPDATE producto  SET prCantidad = WHERE producto.prCodigo=detalle.dtProducto";
-	java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
-	pst.setInt(1,c.getPrCantidad());
-        pst.setString(2, pk);
-        this.lError = true;
-	if (conexion.Update(pst) > 0) {
-            conexion.Commit();
-            this.lError = false;
-	}
+    private void actualizarCantidad(Detalle det) throws SQLException {        
+        String sql = "UPDATE producto  SET prCantidad = prCantidad - ? WHERE producto.prCodigo=?";
+        java.sql.PreparedStatement pst = conexion.getConnection().prepareStatement(sql);
+        pst.setInt(1,det.getDtCantidad());
+        pst.setInt(2, det.getDtPCProducto());        
+        if (conexion.Update(pst) > 0) {
+            conexion.Commit();        
+        }
     }
 
     

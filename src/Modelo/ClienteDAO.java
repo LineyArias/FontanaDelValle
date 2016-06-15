@@ -115,6 +115,7 @@ public class ClienteDAO {
         c.setCiudad(rs.getString("clCorreo"));
         c.setEmail(rs.getString("clMunicipio"));
         c.setEstado(rs.getString("clEstado"));
+        c.setCodigo(rs.getInt("clCodigo"));
         return c;
     } 
 }

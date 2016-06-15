@@ -21,7 +21,10 @@ public class Cliente {
     private String email; 
     private String ciudad;
     private String estado;
+    private int codigo;
   //  private DATE  fechaRegistro;
+
+   
      
    
    // constructor sobrecargado
@@ -126,7 +129,11 @@ public class Cliente {
         this.estado = estado;
     }
     
-    
-    
-    
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }                
 }
